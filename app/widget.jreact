@@ -1,0 +1,57 @@
+- var utils = locals.utils
+- var state = locals.state
+
+//
+//	mixins
+//
+
+mixin selectitems(list, path, style)
+	select.form-control.fill(class=style onChange=utils.view_set(state, path))
+		each el in list
+			option= el
+mixin fileinput(path)
+	div.btn.btn-default.btn-lg.btn-file.fill Browse or drag and drop files
+		input(type="file" multiple="true" onChange=utils.view_files(state, path))
+mixin textareainput(placeholder, path)
+	textarea.form-control.fill(placeholder=placeholder rows="10" onChange=utils.view_set(state, path))
+
+//
+//	page content
+//
+if state.data
+	nav.navbar.navbar-default.navbar-fixed-top.transparent.text-center
+		div.btn-group
+			button.btn.btn-default.navbar-btn(onClick=utils.info("hello nextgenjs")) info
+			button.btn.btn-info.navbar-btn(onClick=utils.notice("hello nextgenjs")) notice
+			button.btn.btn-warning.navbar-btn(onClick=utils.warn("hello nextgenjs")) warn
+			button.btn.btn-danger.navbar-btn(onClick=utils.error("hello nextgenjs")) error
+	div.container-fluid
+		div.row
+			div.col-xs-6
+				div.container-fluid
+					div.row
+						div.col-xs-12
+							+selectitems(["audio","video"], ["data","search","subject"], "btn-primary")
+						div.col-xs-12
+							+selectitems(["substring","direct"], ["data","search","algorithm"], "btn-info")
+						if state.data.search.subject == "audio"
+							div.col-xs-12
+								+selectitems(["artist","title"], ["data","search","field"], "btn-success")
+						div.col-xs-12
+							+textareainput("enter "+state.data.search.field+" list", ["data","search","inputsubjects"])
+						div.col-xs-12
+							button.btn.btn-danger.fill(onClick=utils.search(state))= "search "+state.data.search.object
+			div.col-xs-6
+				div.container-fluid
+					div.row
+						div.col-xs-12
+							+textareainput("enter "+state.data.search.object+" list", ["data","search","inputobjects"])
+if state.data && state.data.task.is_running
+	div.overlay
+		div.pbar.fill
+			div.progress.fill
+				- var task = state.data.task
+				div.progress-bar.progress-bar-danger.progress-bar-striped.active(style="width: "+((task.n_error / task.n_total)*100)+"%")
+				div.progress-bar.progress-bar-warning.progress-bar-striped.active(style="width: "+((task.n_mismatch / task.n_total)*100)+"%")
+				div.progress-bar.progress-bar-success.progress-bar-striped.active(style="width: "+((task.n_ok / task.n_total)*100)+"%")
+				div.progress-bar.progress-bar-primary.progress-bar-striped.active(style="width: "+(((task.n_total - task.n_ok - task.n_mismatch -task.n_error) / task.n_total)*100)+"%")
