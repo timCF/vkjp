@@ -1,4 +1,8 @@
 module.exports = (state, utils) ->
+	VK.init(
+		() -> utils.notice("VK API connected"),
+		() -> utils.error("VK API NOT connected"),
+		"5.50")
 	state.data = {}
 	state.methods = {}
 	state.methods.set_default_search = () ->
@@ -8,6 +12,7 @@ module.exports = (state, utils) ->
 			field: "artist" # || "title"
 			algorithm: "substring" # || "direct"
 			inputsubjects: ""
+			inputsubjectslst: []
 			inputobjects: ""
 		}
 	state.methods.set_default_task = () ->

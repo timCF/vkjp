@@ -1,5 +1,5 @@
 document.addEventListener "DOMContentLoaded", (e) ->
-	# state for main function, mutable
+	# state for main func, mutable
 	state = {}
 	# some compile-time defined utils, frozen
 	utils = Object.freeze(require("utils"))
