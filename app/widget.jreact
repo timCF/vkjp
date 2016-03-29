@@ -9,8 +9,8 @@ mixin selectitems(list, path, style)
 	select.form-control.fill(class=style onChange=utils.view_set(state, path))
 		each el in list
 			option= el
-mixin fileinput(path)
-	div.btn.btn-default.btn-lg.btn-file.fill Browse or drag and drop files
+mixin fileinput(path, style)
+	div.btn.btn-lg.btn-file.fill(class=style) Browse or drag and drop files
 		input(type="file" multiple="true" onChange=utils.view_files(state, path))
 mixin textareainput(placeholder, path)
 	textarea.form-control.fill(placeholder=placeholder rows="10" onChange=utils.view_set(state, path))
@@ -20,38 +20,54 @@ mixin textareainput(placeholder, path)
 //
 if state.data
 	nav.navbar.navbar-default.navbar-fixed-top.transparent.text-center
-		div.btn-group
-			button.btn.btn-default.navbar-btn(onClick=utils.info("hello nextgenjs")) info
-			button.btn.btn-info.navbar-btn(onClick=utils.notice("hello nextgenjs")) notice
-			button.btn.btn-warning.navbar-btn(onClick=utils.warn("hello nextgenjs")) warn
-			button.btn.btn-danger.navbar-btn(onClick=utils.error("hello nextgenjs")) error
+		a(href="http://timcf.github.io/" target="_blank")
+			button.btn.btn-info.navbar-btn(type="button")= "autor"
+		a(href="http://yasobe.ru/na/opensource#form_submit" target="_blank")
+			button.btn.btn-success.navbar-btn(type="button")= "donate"
 	div.container-fluid
 		div.row
 			div.col-xs-6
 				div.container-fluid
 					div.row
 						div.col-xs-12
-							+selectitems(["audio","video"], ["data","search","subject"], "btn-primary")
+							+fileinput(["data","search","inputsubjects"], "btn-info")
 						div.col-xs-12
-							+selectitems(["substring","direct"], ["data","search","algorithm"], "btn-info")
+							+textareainput("... or enter "+state.data.search.field+" list", ["data","search","inputsubjects"])
+						div.col-xs-12
+							+selectitems(["audio","video"], ["data","search","subject"], "btn-primary")
 						if state.data.search.subject == "audio"
 							div.col-xs-12
-								+selectitems(["artist","title"], ["data","search","field"], "btn-success")
+								+selectitems(["artist","title"], ["data","search","field"], "btn-info")
 						div.col-xs-12
-							+textareainput("enter "+state.data.search.field+" list", ["data","search","inputsubjects"])
-						div.col-xs-12
-							button.btn.btn-danger.fill(onClick=utils.search(state))= "search "+state.data.search.object
+							+selectitems(["substring","direct"], ["data","search","algorithm"], "btn-success")
 			div.col-xs-6
 				div.container-fluid
 					div.row
 						div.col-xs-12
-							+textareainput("enter "+state.data.search.object+" list", ["data","search","inputobjects"])
+							+fileinput(["data","search","inputobjects"], "btn-success")
+						div.col-xs-12
+							+textareainput("... or enter "+state.data.search.object+" list", ["data","search","inputobjects"])
+						if (state.data.search.inputsubjects != "") && (state.data.search.inputobjects != "")
+							div.col-xs-12
+								button.btn.btn-danger.form-control.fill(onClick=utils.search(state))= "new search "+state.data.search.object
+						if state.fromstorage
+							div.col-xs-12
+								button.btn.btn-warning.form-control.fill(onClick=utils.continue(state))= "continue"
+							div.col-xs-12
+								button.btn.btn-info.form-control.fill(onClick=utils.download_processed({data: state.fromstorage}))= "download processed"
 if state.data && state.data.task.is_running
 	div.overlay
-		div.pbar.fill
-			div.progress.fill
-				- var task = state.data.task
-				div.progress-bar.progress-bar-danger.progress-bar-striped.active(style="width: "+((task.n_error / task.n_total)*100)+"%")
-				div.progress-bar.progress-bar-warning.progress-bar-striped.active(style="width: "+((task.n_mismatch / task.n_total)*100)+"%")
-				div.progress-bar.progress-bar-success.progress-bar-striped.active(style="width: "+((task.n_ok / task.n_total)*100)+"%")
-				div.progress-bar.progress-bar-primary.progress-bar-striped.active(style="width: "+(((task.n_total - task.n_ok - task.n_mismatch -task.n_error) / task.n_total)*100)+"%")
+		div.container-fluid
+			div.row
+				div.col-xs-12
+					div.progress.fill
+						- var task = state.data.task
+						div.progress-bar.progress-bar-danger.progress-bar-striped.active(style="width: "+((task.n_error / task.n_total)*100)+"%")
+						div.progress-bar.progress-bar-warning.progress-bar-striped.active(style="width: "+((task.n_mismatch / task.n_total)*100)+"%")
+						div.progress-bar.progress-bar-success.progress-bar-striped.active(style="width: "+((task.n_ok / task.n_total)*100)+"%")
+						div.progress-bar.progress-bar-primary.progress-bar-striped.active(style="width: "+(((task.n_total - task.n_ok - task.n_mismatch -task.n_error) / task.n_total)*100)+"%")
+			div.row
+				div.col-xs-6
+					button.btn.btn-warning.fill(onClick=utils.pause(state))= "pause"
+				div.col-xs-6
+					button.btn.btn-info.fill(onClick=utils.download_processed(state))= "download processed"

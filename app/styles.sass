@@ -20,7 +20,7 @@ body
 	background: white
 	cursor: inherit
 	display: block
-$nopaddedclass: container-fluid row col-xs-6 col-xs-12
+$nopaddedclass: container-fluid row col-xs-6 col-xs-12 progress
 @mixin nopadding
 	@each $class in $nopaddedclass
 		.#{$class}
@@ -38,6 +38,3 @@ $nopaddedclass: container-fluid row col-xs-6 col-xs-12
 	list-style: none
 	margin: 0
 	background: rgba(0,0,0,0.8)
-.pbar
-	position: fixed
-	top: 1%

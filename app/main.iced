@@ -6,6 +6,7 @@ module.exports = (state, utils) ->
 		"5.50")
 	state.data = {}
 	state.methods = {}
+	state.fromstorage = store.get("userdata")
 	state.methods.set_default_search = () ->
 		state.data.search = {
 			object: "users"

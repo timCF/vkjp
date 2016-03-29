@@ -4,6 +4,8 @@ document.addEventListener "DOMContentLoaded", (e) ->
 	state = {}
 	# some compile-time defined utils, frozen
 	utils = Object.freeze(require("utils"))
+	window.addEventListener("dragover", utils.devnull)
+	window.addEventListener("drop", utils.devnull)
 	# full state structure, frozen
 	fullstate = Object.freeze({state: state, utils: utils})
 	react = require("react-dom")
