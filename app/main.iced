@@ -1,3 +1,4 @@
+console.log("load main.iced")
 module.exports = (state, utils) ->
 	VK.init(
 		() -> utils.notice("VK API connected"),

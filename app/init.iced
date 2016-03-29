@@ -1,3 +1,4 @@
+console.log("load init.iced")
 document.addEventListener "DOMContentLoaded", (e) ->
 	# state for main func, mutable
 	state = {}

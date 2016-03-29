@@ -14,7 +14,7 @@
   "dependencies": {
     "css-brunch": "^2.0.0",
     "envify": "^1.2.1",
-    "iced-coffee-script-brunch": "^1.7.0",
+    "iced-coffee-script-brunch": "git://github.com/timCF/iced-coffee-script-brunch",
     "jade": "^1.11.0",
     "jade-brunch": "^2.0.0",
     "jade-react-brunch": "git://github.com/timCF/jade-react-brunch",
