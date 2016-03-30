@@ -21,16 +21,18 @@ mixin textareainput(placeholder, path)
 if state.data
 	nav.navbar.navbar-default.navbar-fixed-top.transparent.text-center
 		a(href="http://timcf.github.io/" target="_blank")
-			button.btn.btn-info.navbar-btn(type="button")= "autor"
+			button.btn.btn-info.navbar-btn(type="button")
+				span.glyphicon.glyphicon-user
 		a(href="http://yasobe.ru/na/opensource#form_submit" target="_blank")
-			button.btn.btn-success.navbar-btn(type="button")= "donate"
+			button.btn.btn-success.navbar-btn(type="button")
+				span.glyphicon.glyphicon-usd
 	div.container-fluid
 		div.row
 			div.col-xs-6
 				div.container-fluid
 					div.row
 						div.col-xs-12
-							+fileinput(["data","search","inputsubjects"], "btn-info")
+							+fileinput(["data","search","inputsubjects"], "btn-primary")
 						div.col-xs-12
 							+textareainput("... or enter "+state.data.search.field+" list", ["data","search","inputsubjects"])
 						div.col-xs-12
@@ -44,7 +46,7 @@ if state.data
 				div.container-fluid
 					div.row
 						div.col-xs-12
-							+fileinput(["data","search","inputobjects"], "btn-success")
+							+fileinput(["data","search","inputobjects"], "btn-primary")
 						div.col-xs-12
 							+textareainput("... or enter "+state.data.search.object+" list", ["data","search","inputobjects"])
 						if (state.data.search.inputsubjects != "") && (state.data.search.inputobjects != "")
